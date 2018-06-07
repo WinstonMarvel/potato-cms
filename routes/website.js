@@ -8,7 +8,11 @@ router.get('/',(req,res)=>{
     });
 
 router.get('/:pagename/:pagenamelevel2?',(req,res)=>{
-    res.render('default', {pageTitle: ""+req.params.pagename+req.params.pagenamelevel2, content: "Test content", sideColumn: "Sample text"});
+    // GET MONGO DB DATA HERE OF PAGE NAMES
+    if(req.params.pagename !== "about" || req.params.pagenamelevel2 !== "winston" )
+        res.render('default', {pageTitle: "404 error occured", content: "We couldn't find it!"});
+    else    
+        res.render('default', {pageTitle: ""+req.params.pagename+req.params.pagenamelevel2, content: "Test content", sideColumn: "Sample text"});
 
 });    
 
