@@ -5,6 +5,6 @@ const pageSchema = mongoose.Schema({
     contents: String
 });
 
-module.exports.default = mongoose.model('page', pageSchema);
+module.exports = mongoose.model('page', pageSchema);
 
 

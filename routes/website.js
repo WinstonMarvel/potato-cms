@@ -1,19 +1,35 @@
 // VIEWABLE ROUTES FOR THE WEBSITE FRONT_END
-
+const config = require('../config.json');
 const express = require('express');
 const router = express.Router();
+const pages = require('../models/models.js');
 
 router.get('/',(req,res)=>{
-        res.render('home', {pageTitle: "Test2", content: "dummy Content"});
+    res.render('home', {pageTitle: "Home", content: "This is our homepage"});
+});
+
+router.get('/:pagename',(req,res, next)=>{
+    pages.findOne({pageTitle: req.params.pagename}, (err, page)=>{
+        if(err){
+            console.log(err);
+            res.render('home', {pageTitle: "ERROR", content: "Internal ERROR"});
+        }
+        else if(!page){
+            res.render('home', {pageTitle: "404", content: "Sorry. No such page was found."});
+        }   
+        else
+            res.render('default', {pageTitle: page.pageTitle, content: page.contents, sideColumn: 'No data yet'});
     });
+});
 
-router.get('/:pagename/:pagenamelevel2?',(req,res)=>{
-    // GET MONGO DB DATA HERE OF PAGE NAMES
-    if(req.params.pagename !== "about" || req.params.pagenamelevel2 !== "winston" )
-        res.render('default', {pageTitle: "404 error occured", content: "We couldn't find it!"});
-    else    
-        res.render('default', {pageTitle: ""+req.params.pagename+req.params.pagenamelevel2, content: "Test content", sideColumn: "Sample text"});
 
-});    
+// router.get('/:pagename/:pagenamelevel2?',(req,res)=>{
+//     // GET MONGO DB DATA HERE OF PAGE NAMES
+//     if(req.params.pagename !== "about" || req.params.pagenamelevel2 !== "winston" )
+//         res.render('default', {pageTitle: "404 error occured", content: "We couldn't find it!"});
+//     else    
+//         res.render('default', {pageTitle: ""+req.params.pagename+req.params.pagenamelevel2, content: "Test content", sideColumn: "Sample text"});
+
+// });    
 
 module.exports = router;
