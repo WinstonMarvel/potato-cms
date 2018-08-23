@@ -6,6 +6,9 @@
   "repository": "simplecms",
   "author": "Winston Jude",
   "license": "MIT",
+  "scripts": {
+    "dev": "nodemon"
+  },
   "dependencies": {
     "bcrypt": "^2.0.1",
     "body-parser": "^1.18.3",

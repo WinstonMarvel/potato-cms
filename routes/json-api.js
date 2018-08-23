@@ -4,9 +4,9 @@
 const config = require('../config.json');    
 const express = require('express');
 const router = express.Router();
-const pages = require('../models/models');
+const pages = require('../models/models').pages;
 
-router.get('/api', (req,res)=>{
+router.get('/', (req,res)=>{
     pages.find({},(err, pagelist)=>{
         if(err){
             console.log(err);
@@ -17,7 +17,7 @@ router.get('/api', (req,res)=>{
     })
 })
 
-router.post('/api', (req,res)=>{
+router.post('/', (req,res)=>{
     // To do:
         // Ensure Unique pageTitle. Ensure pageTitle is _id
         // Validate page names. Remove whitespaces and special characters.
@@ -34,7 +34,7 @@ router.post('/api', (req,res)=>{
     
 })
 
-router.delete('/api', (req,res)=>{
+router.delete('/', (req,res)=>{
     pages.findOneAndRemove({pageTitle: req.body.pageTitle}, (err,page)=>{
         if(err){
             console.log(`Error encountered: ${err}`);
@@ -47,7 +47,7 @@ router.delete('/api', (req,res)=>{
     })
 })
 
-router.put('/api', (req,res)=>{
+router.put('/', (req,res)=>{
     pages.findOneAndUpdate({pageTitle: req.body.pageTitle}, req.body, (err, page)=>{
         console.log(`page ${page} has been updated`);
     });

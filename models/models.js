@@ -1,10 +1,30 @@
 const mongoose = require('mongoose');
 
 const pageSchema = mongoose.Schema({
-    pageTitle: String,
+    slug: {
+        type: String,
+        unique: true,
+        trim : true,
+        lowercase: true,     
+        maxlength: 100
+    },
+    pageTitle: {
+    	type: String 
+    },
     contents: String
 });
 
-module.exports = mongoose.model('page', pageSchema);
+
+const menuSchema = mongoose.Schema({
+    name : {
+        type: String,
+        unique: true
+    },
+	items : Array
+});
 
 
+module.exports = {
+    pages:   mongoose.model('page', pageSchema),
+    menus:   mongoose.model('menu', menuSchema)
+}

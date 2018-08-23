@@ -1,0 +1,57 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+
+.main-area, sidebar{
+  height: 100vh;
+}
+
+.sidebar{
+  border-right: 1px solid #8895a9;
+}
+
+ 
+.logo-container{
+  height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-bottom: 1px solid grey;
+}
+
+a.logo{
+  display: block;
+  text-align: center;
+  font-size: 22px;
+  text-transform: capitalize;
+  font-weight: 900;
+  letter-spacing: -1px;
+  text-decoration: none;
+}
+a.logo:hover{
+  text-decoration: none;
+}
+
+.logo span{
+  font-size: 14px;
+  color: rgba(78, 76, 76, 1);
+  position: relative;
+  top: -2px;
+}

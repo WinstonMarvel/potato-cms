@@ -16,21 +16,22 @@ db.on('open', ()=>{
 
 app.use(bodyParser.urlencoded({extended: true}));
 // const db = mongoose.connect(config.database.url, (err)=>{
-//     if(err)
+//     if(err) 
 //         console.error(err);
 // }); 
 
-// var pageModel = require('./models/models');
+// var pageModel = require('./models/models'); 
 
 var routes = require('./routes/index.js');
 var handlebars = require('express-handlebars');
 
+// handlebars.registerPartials(__dirname + 'views/partials');
 
-app.engine("handlebars", handlebars({defaultLayout:'main.handlebars'}));
+app.engine("handlebars", handlebars({defaultLayout:'main.handlebars', partialsDir: __dirname + '/views/partials/' }));
 app.set('view engine', "handlebars");
 
 
 app.use('/', routes);
 
 
-app.listen(3000);
+app.listen(config.port);

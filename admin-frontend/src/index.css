@@ -1,5 +1,64 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,700,900");
+* {
+  box-sizing: border-box; }
+
+html {
+  min-height: 100%;
+  position: relative; }
+
 body {
-  margin: 0;
+  margin: 0 0 100px;
   padding: 0;
-  font-family: sans-serif;
-}
+  font-family: 'Roboto', sans-serif;
+  margin-bottom: 80px;
+  min-height: 100vh; }
+
+#root {
+  height: 100%; }
+
+header {
+  background: black;
+  margin-bottom: 40px; }
+
+a.logo {
+  color: #fff;
+  padding: 23px 0;
+  font-size: 28px;
+  font-weight: 400;
+  display: table;
+  font-family: 'Century Gothic', sans-serif; }
+  a.logo:hover {
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    background-image: linear-gradient(45deg, yellow, blue); }
+
+#pageContent {
+  height: 20em; }
+
+.login-box {
+  margin: auto;
+  padding: 4% 4%;
+  border-radius: 4px;
+  background: #ffffff;
+  box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.3); }
+  .login-box input {
+    min-width: 280px; }
+
+footer {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  border-top: 1px solid #ddd;
+  background: #f5f5f5; }
+  footer a {
+    color: #000;
+    text-decoration: none; }
+    footer a span {
+      font-size: 30px; }
+    footer a:hover {
+      color: #000;
+      text-decoration: none; }
+      footer a:hover span {
+        font-weight: 700; }

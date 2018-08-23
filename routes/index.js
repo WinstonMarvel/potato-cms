@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-router.use('/', require('./json-api'));
+router.use('/api', require('./json-api'));
+router.use(express.static('public'));
 router.use('/', require('./website'));
 
 module.exports = router;
