@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import {Container, Row, Col, Dropdown, DropdownToggle, DropdownItem, DropdownMenu} from 'reactstrap';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import Login from './../Login';
 import Dashboard from './../Dashboard';
-import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
+
 import './App.scss';
 
 class App extends Component {
@@ -20,7 +20,7 @@ class App extends Component {
       <Router>
         <Switch>
           <Route exact path='/' component={Login}/>
-          <Route exact path='/dashboard' component={Dashboard}/>
+          <Route path='/admin' component={Dashboard}/>
         </Switch>
       </Router>
     );
