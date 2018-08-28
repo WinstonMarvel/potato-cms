@@ -13,9 +13,11 @@ router.get('/:pagename',(req,res, next)=>{
     pages.findOne({slug: req.params.pagename}, (err, page)=>{
         if(err){
             console.log(err);
+            res.status(500);
             res.render('home', {pageTitle: "ERROR", content: "Internal ERROR"});
         }
         else if(!page){
+            res.status(400);
             res.render('home', {pageTitle: "404", content: "Sorry. No such page was found."});
         }   
         else

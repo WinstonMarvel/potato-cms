@@ -10,10 +10,10 @@ router.get('/', (req,res)=>{
     pages.find({},(err, pagelist)=>{
         if(err){
             console.log(err);
-            res.json({'success':  false});
+            res.status(404).json({'success':  false});
         }   
         else
-            res.json({'success':  true, pagelist});
+            res.status(404).json({'success':  true, pagelist});
     })
 })
 
@@ -24,11 +24,11 @@ router.post('/', (req,res)=>{
     pages.create(req.body, (err,page)=>{
         if(err){
             console.log(err);
-            res.json({ 'success': false, 'description' : `0 pages added`});
+            res.status(500).json({ 'success': false, 'description' : `0 pages added`});
         }
         else{
             console.log('Added one new page');  
-            res.json({ success: 'Yes',  'description' : `One new page titled '${page.pageTitle}' was added`});  
+            res.status(201).json({ success: 'Yes',  'description' : `One new page titled '${page.pageTitle}' was added`});  
         }
     });
     
@@ -38,11 +38,11 @@ router.delete('/', (req,res)=>{
     pages.findOneAndRemove({pageTitle: req.body.pageTitle}, (err,page)=>{
         if(err){
             console.log(`Error encountered: ${err}`);
-            res.json({ 'success': false, 'description' : `${page.pageTitle} not removed`});
+            res.status(500).json({ 'success': false, 'description' : `${page.pageTitle} not removed`});
         }
         else{
             console.log(`Page removed : ${page.pageTitle}`);
-            res.json({ 'success': true, 'description': `${page.pageTitle} Removed`});
+            res.status(200).json({ 'success': true, 'description': `${page.pageTitle} Removed`});
         }
     })
 })
@@ -51,7 +51,7 @@ router.put('/', (req,res)=>{
     pages.findOneAndUpdate({pageTitle: req.body.pageTitle}, req.body, (err, page)=>{
         console.log(`page ${page} has been updated`);
     });
-    res.json({ success: 'Yes'});
+    res.status(200).json({ success: 'Yes'});
 });
 
 module.exports = router;
