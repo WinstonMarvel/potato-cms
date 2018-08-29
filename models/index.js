@@ -11,7 +11,11 @@ const pageSchema = mongoose.Schema({
     pageTitle: {
     	type: String 
     },
-    contents: String
+    contents: String,
+    bannerOverride : String,
+    seoTitle: String,
+    seoKeywords: String,
+    seoDescription: String
 });
 
 
@@ -20,7 +24,12 @@ const menuSchema = mongoose.Schema({
         type: String,
         unique: true
     },
-	items : Array
+	items : [
+        {
+            text: String,
+            link: String
+        }
+    ]
 });
 
 

@@ -4,9 +4,10 @@
 const config = require('../config.json');    
 const express = require('express');
 const router = express.Router();
-const pages = require('../models/models').pages;
+const pages = require('../models').pages;
+const menus = require('../models').menus;
 
-router.get('/', (req,res)=>{
+router.get('/pages', (req,res)=>{
     pages.find({},(err, pagelist)=>{
         if(err){
             console.log(err);
@@ -17,7 +18,7 @@ router.get('/', (req,res)=>{
     })
 })
 
-router.post('/', (req,res)=>{
+router.post('/pages', (req,res)=>{
     // To do:
         // Ensure Unique pageTitle. Ensure pageTitle is _id
         // Validate page names. Remove whitespaces and special characters.
@@ -34,8 +35,8 @@ router.post('/', (req,res)=>{
     
 })
 
-router.delete('/', (req,res)=>{
-    pages.findOneAndRemove({pageTitle: req.body.pageTitle}, (err,page)=>{
+router.delete('/pages', (req,res)=>{
+    pages.findOneAndRemove({_id: req.body.id}, (err,page)=>{
         if(err){
             console.log(`Error encountered: ${err}`);
             res.status(500).json({ 'success': false, 'description' : `${page.pageTitle} not removed`});
@@ -46,12 +47,60 @@ router.delete('/', (req,res)=>{
         }
     })
 })
-
-router.put('/', (req,res)=>{
-    pages.findOneAndUpdate({pageTitle: req.body.pageTitle}, req.body, (err, page)=>{
+ 
+router.put('/pages', (req,res)=>{
+    // To do : Remove null fields before update
+    pages.findOneAndUpdate({_id: req.body.id}, req.body, (err, page)=>{
         console.log(`page ${page} has been updated`);
     });
     res.status(200).json({ success: 'Yes'});
+});
+
+
+
+router.get('/menus', (req,res)=>{
+    menus.find({}, (err, menulist)=>{
+        if(err)
+            res.status(404).json({success: 'false'});
+        else    
+            res.status(200).json({success: 'true', menulist});
+    });
+});
+
+router.post('/menus', (req,res)=>{
+    console.log(menuItems);
+    menus.create({
+        name: req.body.name, 
+        items: JSON.parse(req.body.items)
+    }, (err, menu)=>{
+        if(err)
+            res.status(500).json({success: "false"});
+        else
+            res.status(200).json({success: "true", description: `"${menu.name}" was created successfully`});
+    });
+});
+ 
+
+router.delete('/menus', (req,res)=>{
+    menus.findOneAndRemove({_id: req.body.id}, (err, menu)=>{
+        if(err)
+            res.status(500).json({success: "false"});
+        else
+            res.status(200).json({success: "true", description: `"${menu.name}" was removed successfully`});
+    });
+});
+
+router.put('/menus', (req,res)=>{
+    // To do : Remove null fields before update
+    menus.findOneAndUpdate(req.body.id, {
+        name: req.body.name, 
+        items: JSON.parse(req.body.items)
+    }, (err, menu)=>{
+        if(err)
+            res.status(500).json({success: "false"});
+        else
+            res.status(200).json({success: "true", description: `"${menu.name}" was updated successfully`});
+    });
 });
 
 module.exports = router;

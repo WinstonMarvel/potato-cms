@@ -2,8 +2,8 @@
 const config = require('../config.json');
 const express = require('express');
 const router = express.Router();
-const pages = require('../models/models.js').pages;
-const menus = require('../models/models.js').menus;
+const pages = require('../models').pages;
+const menus = require('../models').menus;
 
 router.get('/',(req,res)=>{
     res.render('home', {pageTitle: "Home", content: "This is our homepage"});
@@ -14,11 +14,11 @@ router.get('/:pagename',(req,res, next)=>{
         if(err){
             console.log(err);
             res.status(500);
-            res.render('home', {pageTitle: "ERROR", content: "Internal ERROR"});
+            res.render('default', {pageTitle: "ERROR", content: "Internal ERROR"});
         }
         else if(!page){
-            res.status(400);
-            res.render('home', {pageTitle: "404", content: "Sorry. No such page was found."});
+            res.status(404);
+            res.render('default', {pageTitle: "404", content: "Sorry. No such page was found."});
         }   
         else
             renderPage(res, page);
@@ -37,7 +37,7 @@ router.get('/:pagename',(req,res, next)=>{
 // });    
  
 let renderPage = function(res, page){
-    menus.findOne({name: 'defaultMenu'}, function(err, menu){
+    menus.findOne({name: 'Default Menu'}, function(err, menu){
         console.log(menu);
         res.render('default', {pageTitle: page.pageTitle, content: page.contents, sideColumn: 'No data yet', menuItems: menu.items});
     });
