@@ -4,24 +4,20 @@ import 'react-quill/dist/quill.snow.css';
 
 
 class pageContentInput extends Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            data: ''
-        };
-        this.handleChange = this.handleChange.bind(this);
-    }
-
-    handleChange = (value)=>{
-        this.setState({
-            data: value
-        });
-    }
-
+    // constructor(props){
+    //     super(props);
+    // }
 
     render(){
         return(
-            <ReactQuill value={this.state.data} onChange={this.handleChange} />
+            <ReactQuill 
+            value={this.props.content} 
+            onChange={
+                (data)=>{
+                    this.props.handleChange(this.props.stateVariable, data)
+                }
+            }
+            />
         )
     }
 }

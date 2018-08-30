@@ -2,23 +2,56 @@ import React, {Component} from 'react';
 import FormTextInput from '../Components/input';
 import PageContentInput from '../Components/pageContentInput';
 import './Pages.css';
-
+import axios from 'axios';
 
 class Dashboard extends Component{
     constructor(props){
         super(props);
         this.state = {
-            x : true,
-            placeholder : true,
-            pageTitle: ""
+            disableSlugEdit: true,
+            placeholder: true,
+            selectedPage: "",
+            pageTitle: "",
+            pageSlug: "",
+            pageContent: "",
+            listOfPages: []
         }
         // this.makeEditable.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.makeEditable = this.makeEditable.bind(this);
     }
 
     makeEditable(e){
+        this.setState((prevState)=>{
+               return {disableSlugEdit: !prevState.disableSlugEdit}
+        });
+    }
+
+    componentDidMount(){
+        axios.get('/api/pages').then((res)=>{
+            console.log(res.data.pagelist);
+            //Selects home page by default
+            this.populateListOfPages(res.data.pagelist);
+            this.setActivePage(res.data.pagelist[0]);
+        });
+    }
+
+    setActivePage(page){
         this.setState({
-            x : false
+            selectedPage: page.slug,
+            pageTitle: page.pageTitle,
+            pageSlug: page.slug,
+            pageContent: page.contents
+        });
+    }
+    
+    populateListOfPages(list){
+        var listOfPages= [];
+        list.map((element, index)=>{
+            listOfPages.push(element.pageTitle);
+        });
+        this.setState({
+            listOfPages: listOfPages
         });
     }
 
@@ -36,19 +69,23 @@ class Dashboard extends Component{
                     <div className="row">
                         <div className="col-md-8">
                             <div className="form-group">
-                                <FormTextInput handleChange={this.handleChange} stateVariable="pageTitle" placeholderData="test"/>
+                                <FormTextInput handleChange={this.handleChange} stateVariable="pageTitle" placeholderData="Edit Page title" value={this.state.pageTitle}/>
                             </div>
                             <div className="form-group">
                                 <div className="input-group">
-                                    <input type="text" className="form-control" value="/page-slug/" disabled={this.state.x} />
+                                    <input type="text" className="form-control" value={this.state.pageSlug} disabled={this.state.disableSlugEdit} />
                                     <div className="input-group-append">
-                                        <button className="btn btn-outline-secondary" type="button">Edit</button>
+                                        <button className="btn btn-outline-secondary" type="button" onClick={this.makeEditable}>
+                                        {
+                                            this.state.disableSlugEdit?"Edit":"Save"
+                                        }
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                             <div className="form-group">
                                 {/* <label for="pagecontent">Update page content:</label> */}
-                                <PageContentInput ></PageContentInput>
+                                <PageContentInput stateVariable="pageContent" handleChange={this.handleChange} content={this.state.pageContent}></PageContentInput>
                                 {/* <textarea name="pagecontent" id="pageContent" className="form-control" placeholder="Update page content:"></textarea> */}
                             </div>
                         </div>

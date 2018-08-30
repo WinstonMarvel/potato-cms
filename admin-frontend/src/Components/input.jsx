@@ -23,6 +23,7 @@ class FormTextInput extends React.Component{
                     (e)=>{this.props.handleChange(this.props.stateVariable, e.target.value)}
                 }   
                 placeholder={this.state.showPlaceholder? this.props.placeholderData : ""} 
+                value={this.props.value}
             />
         )
     }

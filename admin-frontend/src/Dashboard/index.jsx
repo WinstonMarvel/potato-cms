@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import QuickLinks from './QuickLinks';
 import Header from '../Header';
 import Footer from '../Footer';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {Route} from 'react-router-dom';
 import Pages from './../Pages';
 import Menus from './../Menus';
 
