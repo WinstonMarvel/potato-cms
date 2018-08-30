@@ -8,13 +8,34 @@ const pages = require('../models').pages;
 const menus = require('../models').menus;
 
 router.get('/pages', (req,res)=>{
-    pages.find({},(err, pagelist)=>{
+    pages.find({},(err, pages)=>{
+        if(err){
+            console.log(err);
+            res.status(500).json({'success':  false});
+        }   
+        else{
+            var listOfPages= [];
+            pages.map((page)=>{
+                listOfPages.push({
+                    id: page._id,
+                    slug: page.slug
+                });
+            });
+            res.status(200).json({'success':  true, listOfPages});
+        }
+    })
+})
+
+
+router.get('/pages/:pageslug', (req,res)=>{
+    pages.find({slug:req.params.pageslug},(err, page)=>{
         if(err){
             console.log(err);
             res.status(404).json({'success':  false});
         }   
-        else
-            res.status(200).json({'success':  true, pagelist});
+        else{
+            res.status(200).json({'success':  true, page});
+        }
     })
 })
 
