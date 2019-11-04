@@ -28,7 +28,7 @@ router.get('/pages', (req,res)=>{
 
 
 router.get('/pages/:pageslug', (req,res)=>{
-    pages.find({slug:req.params.pageslug},(err, page)=>{
+    pages.findOne({slug:req.params.pageslug},(err, page)=>{
         if(err){
             console.log(err);
             res.status(404).json({'success':  false});

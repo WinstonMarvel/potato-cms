@@ -29,30 +29,33 @@ class Dashboard extends Component{
 
     componentDidMount(){
         axios.get('/api/pages').then((res)=>{
-            console.log(res.data.pagelist);
+            console.log(res.data.listOfPages);
             //Selects home page by default
-            this.populateListOfPages(res.data.pagelist);
-            this.setActivePage(res.data.pagelist[0]);
+            this.populateListOfPages(res.data.listOfPages);
         });
     }
 
-    setActivePage(page){
-        this.setState({
-            selectedPage: page.slug,
-            pageTitle: page.pageTitle,
-            pageSlug: page.slug,
-            pageContent: page.contents
+    setActivePage(slug){
+        axios.get(`/api/pages/home`).then((res)=>{
+            console.log(res);
+                this.setState({
+                    selectedPage: res.data.page.slug,
+                    pageTitle: res.data.page.pageTitle,
+                    pageSlug: res.data.page.slug,
+                    pageContent: res.data.page.contents
+                });
         });
     }
     
     populateListOfPages(list){
         var listOfPages= [];
         list.map((element, index)=>{
-            listOfPages.push(element.pageTitle);
+            listOfPages.push(element.slug);
         });
         this.setState({
             listOfPages: listOfPages
         });
+        this.setActivePage(this.state.listOfPages[0]);
     }
 
     handleChange(stateVariable, data){
@@ -96,7 +99,7 @@ class Dashboard extends Component{
                                     <option>Home</option>
                                     <option>About</option>
                                     <option>Contact</option>
-                                    <option>Downloads</option>
+                                    <option selected={true}>Downloads</option>
                                 </select>
                                 <button className="btn btn-primary mt-3">Update</button>
                             </div>

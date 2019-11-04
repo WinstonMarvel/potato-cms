@@ -11,6 +11,7 @@ class pageContentInput extends Component{
     render(){
         return(
             <ReactQuill 
+            defaultValue=""
             value={this.props.content} 
             onChange={
                 (data)=>{
